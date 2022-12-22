@@ -34,28 +34,56 @@ const Home: NextPage<IndexPageProps> = ({ initialCatImageUrl }) => {
     setIsLoading(false);
   };
 
+  const handleClickImage = () => {};
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-      }}
-    >
-      <h1>猫画像のアプリ</h1>
-      {isLoading ? (
-        <Dimmer active>
-          <Loader />
-        </Dimmer>
-      ) : (
-        <img src={catImageUrl} alt="猫画像" width={500} height="auto" />
-      )}
-      <button style={{ marginTop: "18" }} onClick={handleClick}>
-        今日の猫
-      </button>
-    </div>
+    // <div
+    //   style={{
+    //     display: "flex",
+    //     flexDirection: "column",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     height: "100vh",
+    //   }}
+    // >
+    //   <h1>猫画像のアプリ</h1>
+    //   {isLoading ? (
+    //     <Dimmer active>
+    //       <Loader />
+    //     </Dimmer>
+    //   ) : (
+    //     <img src={catImageUrl} alt="猫画像" width={500} height="auto" />
+    //   )}
+    //   <button style={{ marginTop: "18" }} onClick={handleClick}>
+    //     今日の猫
+    //   </button>
+    // </div>
+    <>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}
+      >
+        <div onClick={handleClickImage}>
+          <img
+            src="https://images.dog.ceo/breeds/hound-afghan/n02088094_1007.jpg"
+            alt=""
+            width={500}
+            height={500}
+          />
+        </div>
+        <div onClick={handleClickImage}>
+          <img
+            src="https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg"
+            alt=""
+            width={500}
+            height={500}
+          />
+        </div>
+      </div>
+    </>
   );
 };
 
