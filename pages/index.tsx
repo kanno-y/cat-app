@@ -6,6 +6,8 @@ import { useState } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import "semantic-ui-css/semantic.min.css";
 import { Dimmer, Loader } from "semantic-ui-react";
+import { motion } from "framer-motion";
+import css from "styled-jsx/css";
 
 interface SearchCatImage {
   id: string;
@@ -18,23 +20,44 @@ interface IndexPageProps {
   initialCatImageUrl: string;
 }
 
-const fetchCatImage = async (): Promise<SearchCatImage> => {
-  const res = await fetch("https://api.thecatapi.com/v1/images/search");
-  const result = await res.json();
-  return result[0];
+type allBreed = {
+  message: {
+    [key: string]: string[];
+  };
+  status: string;
 };
-const Home: NextPage<IndexPageProps> = ({ initialCatImageUrl }) => {
+
+// const fetchCatImage = async (): Promise<SearchCatImage> => {
+//   const res = await fetch("https://api.thecatapi.com/v1/images/search");
+//   const result = await res.json();
+//   return result[0];
+// };
+
+const fetchAllBreed = async (): Promise<allBreed> => {
+  const res = await fetch("https://dog.ceo/api/breeds/list/all");
+  const result = await res.json();
+  console.log(result);
+  return result;
+};
+const Home: NextPage<any> = ({ initialCatImageUrl, allBreedList }) => {
   const [catImageUrl, setCatImageUrl] = useState(initialCatImageUrl);
   const [isLoading, setIsLoading] = useState(false);
+  const mainBreeds = allBreedList.message;
+  // const handleClick = async () => {
+  //   setIsLoading(true);
+  //   const catImage = await fetchCatImage();
+  //   setCatImageUrl(catImage.url);
+  //   setIsLoading(false);
+  // };
 
-  const handleClick = async () => {
-    setIsLoading(true);
-    const catImage = await fetchCatImage();
-    setCatImageUrl(catImage.url);
-    setIsLoading(false);
+  const handleClickImage = (src: string) => {
+    console.log("src", src);
   };
 
-  const handleClickImage = () => {};
+  const iamge1 =
+    "https://images.dog.ceo/breeds/hound-afghan/n02088094_1007.jpg";
+  const iamge2 = "https://images.dog.ceo/breeds/hound-afghan/n02088094_185.jpg";
+
   return (
     // <div
     //   style={{
@@ -62,25 +85,27 @@ const Home: NextPage<IndexPageProps> = ({ initialCatImageUrl }) => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "space-evenly",
           height: "100vh",
+          backgroundColor: "black",
         }}
       >
-        <div onClick={handleClickImage}>
-          <img
-            src="https://images.dog.ceo/breeds/hound-afghan/n02088094_1007.jpg"
-            alt=""
-            width={500}
-            height={500}
-          />
+        <motion.div
+          animate={{
+            x: 0,
+            backgroundColor: "#ee0c0c",
+            boxShadow: "10px 10px 0 rgba(255, 255, 255, 0.2)",
+            position: "fixed",
+            transitionEnd: {
+              display: "none",
+            },
+          }}
+        />
+        <div onClick={() => handleClickImage(iamge1)}>
+          <img src={iamge1} alt="" width={500} height={500} />
         </div>
-        <div onClick={handleClickImage}>
-          <img
-            src="https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg"
-            alt=""
-            width={500}
-            height={500}
-          />
+        <div onClick={() => handleClickImage(iamge2)}>
+          <img src={iamge2} alt="" width={500} height={500} />
         </div>
       </div>
     </>
@@ -88,13 +113,11 @@ const Home: NextPage<IndexPageProps> = ({ initialCatImageUrl }) => {
 };
 
 export default Home;
-export const getServerSideProps: GetServerSideProps<
-  IndexPageProps
-> = async () => {
-  const catImage = await fetchCatImage();
+export const getServerSideProps: GetServerSideProps<any> = async () => {
+  const allBread = await fetchAllBreed();
   return {
     props: {
-      initialCatImageUrl: catImage.url,
+      allBreedList: allBread,
     },
   };
 };
