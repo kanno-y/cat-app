@@ -82,6 +82,7 @@ const Home: NextPage<any> = ({ initialCatImageUrl, allBreedList }) => {
     // </div>
     <>
       <h3>test 12345</h3>
+      <p>テキストを追加</p>
       <div
         style={{
           display: "flex",
