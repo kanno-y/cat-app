@@ -81,6 +81,7 @@ const Home: NextPage<any> = ({ initialCatImageUrl, allBreedList }) => {
     //   </button>
     // </div>
     <>
+      <h3>test 12345</h3>
       <div
         style={{
           display: "flex",
